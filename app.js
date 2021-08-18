@@ -8,6 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const tourRouter = require('./router/tourRouter');
 const userRouter = require('./router/userRouter');
@@ -101,17 +102,17 @@ app.use(
     ],
   })
 );
-
+app.use(compression());
 // Test Middleware
 app.use((req, res, next) => {
-  console.log('Hello from middleware');
+  // console.log('Hello from middleware');
   // console.log(req.headers);
   next();
 });
 
 app.use((req, res, next) => {
   req.reqTime = new Date().toISOString();
-  console.log(req.cookies);
+  // console.log(req.cookies);
   next();
 });
 app.use('/', viewRouter);
